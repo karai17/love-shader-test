@@ -9,26 +9,34 @@ function Galaxy:init(shader, quality)
       
       source = source:gsub("$FRONT_LAYER_INTENSITY", "10000.0")
       source = source:gsub("$BACK_LAYER_INTENSITY", "20000.0")
+
+      source = source:gsub("$DEFINE_EVOLVE", "#define EVOLVE")
    elseif quality == "high" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "80")
       source = source:gsub("$BACK_LAYER_QUALITY", "40")
       
       source = source:gsub("$FRONT_LAYER_INTENSITY", "5000.0")
       source = source:gsub("$BACK_LAYER_INTENSITY", "8000.0")
+
+      source = source:gsub("$DEFINE_EVOLVE", "#define EVOLVE")
    elseif quality == "medium" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "26")
       source = source:gsub("$BACK_LAYER_QUALITY", "18")
 
       source = source:gsub("$FRONT_LAYER_INTENSITY", "10000.0")
       source = source:gsub("$BACK_LAYER_INTENSITY", "15000.0")
+
+      source = source:gsub("$DEFINE_EVOLVE", "#define EVOLVE")
    elseif quality == "low" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "20")
       source = source:gsub("$BACK_LAYER_QUALITY", "10")
 
       source = source:gsub("$FRONT_LAYER_INTENSITY", "20000.0")
       source = source:gsub("$BACK_LAYER_INTENSITY", "30000.0")
+
+      source = source:gsub("$DEFINE_EVOLVE", "")
    end
-	 
+   print(source)
    self.fs = love.graphics.newShader(source)
    self.frequencies = {0.5, 0.5, 0.5, 0.5}
    print(self.fs:getWarnings())

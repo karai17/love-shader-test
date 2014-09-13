@@ -8,6 +8,8 @@ extern vec4      freqs;
 #define FRONT_LAYER_INTENSITY $FRONT_LAYER_INTENSITY
 #define BACK_LAYER_INTENSITY $BACK_LAYER_INTENSITY
 
+$DEFINE_EVOLVE
+
 
 //CBS
 //Parallax scrolling fractal galaxy.
@@ -58,13 +60,21 @@ vec3 nrand3( vec2 co )
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
 	vec2 uv = 2. * gl_FragCoord.xy / love_ScreenSize.xy - 1.;
 	vec2 uvs = uv * love_ScreenSize.xy / max(love_ScreenSize.x, love_ScreenSize.y);
-	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.) + vec3(offset, 0.0);
+	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
+#ifdef EVOLVE
+	p += .2 * vec3(offset,  sin(global_time / 128.));
+#else
+	p += vec3(offset, 0);
+#endif
 	
 	float t = field(p,freqs[2]);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
 	
 	//Second Layer
 	vec3 p2 = vec3(uvs / (4.+sin(global_time*0.11)*0.2+0.2+sin(global_time*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
+#ifdef EVOLVE
+	p2 += 0.25 * vec3(0, 0,  sin(global_time / 128.));
+#endif
 	p2 += 0.2*p;
 
 	float t2 = field2(p2,freqs[3]);
