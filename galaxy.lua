@@ -22,7 +22,7 @@ end
 function Galaxy:update(dt)
    -- make channels fade out
    for i in ipairs(self.frequencies) do
-      self.frequencies[i] = self.frequencies[i] - 0.6*dt;
+      self.frequencies[i] = self.frequencies[i] - 0.3*dt;
 
    end
    if math.random(0, 100)*dt < 0.2 then
@@ -30,7 +30,7 @@ function Galaxy:update(dt)
       self.frequencies[which] = self.frequencies[which] + 0.1
    end
    for i in ipairs(self.frequencies) do
-      self.frequencies[i] = math.clamp(0.1, self.frequencies[i], 1.0)
+      self.frequencies[i] = math.clamp(0.1, self.frequencies[i], 10.0)
    end
    self.time = self.time + dt
 end
