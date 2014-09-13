@@ -1,21 +1,30 @@
+// Fractal scrolling background
+
+// Credits:
+// Original version from https://www.shadertoy.com/view/MslGWN
+// Inspired by JoshP's Simplicity shader: https://www.shadertoy.com/view/lslGWr
+// Fractals from
+// http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
+// Starfield from http://glsl.heroku.com/e#6904.0
+
+// Ported for Love2D, optimizations and quality presets by Landon Manning and Jonathan Ringstad
+
 extern float     global_time;           // shader playback time (in seconds)
 extern float     global_time_sin;       // sine of playback time
-extern vec2      offset;
-extern vec4      freqs;
+extern vec2      offset;                // offset for panning around
+extern vec4      freqs;                 // 4 frequency bands for flaring up colors
 
+// Defines, substitute before compilation
 #define FRONT_LAYER_QUALITY $FRONT_LAYER_QUALITY
 #define BACK_LAYER_QUALITY $BACK_LAYER_QUALITY
 #define FRONT_LAYER_INTENSITY $FRONT_LAYER_INTENSITY
 #define BACK_LAYER_INTENSITY $BACK_LAYER_INTENSITY
 
+// "EVOLVE" can be defined or not, to configure whether
+// the fractal should evolve over time.
 $DEFINE_EVOLVE
 
 
-//CBS
-//Parallax scrolling fractal galaxy.
-//Inspired by JoshP's Simplicity shader: https://www.shadertoy.com/view/lslGWr
-
-// http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
 float field(in vec3 p,float s) {
 	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * FRONT_LAYER_INTENSITY));
 	float accum = s/4.;
@@ -82,7 +91,6 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	
 	
 	//Let's add some stars
-	//Thanks to http://glsl.heroku.com/e#6904.0
 	vec2 seed = p.xy * 2.0;	
 	seed = floor(seed * love_ScreenSize.x);
 	vec3 rnd = nrand3( seed );
