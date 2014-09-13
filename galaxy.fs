@@ -1,12 +1,5 @@
-/*
-extern vec3      iResolution;           // viewport resolution (in pixels)
+extern vec2      iResolution;           // viewport resolution (in pixels)
 extern float     iGlobalTime;           // shader playback time (in seconds)
-extern float     iChannelTime[4];       // channel playback time (in seconds)
-extern vec3      iChannelResolution[4]; // channel resolution (in pixels)
-extern vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-extern samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
-extern vec4      iDate;                 // (year, month, day, time in seconds)
-extern float     iSampleRate;           // sound sample rate (i.e., 44100)
 
 //CBS
 //Parallax scrolling fractal galaxy.
@@ -53,24 +46,19 @@ vec3 nrand3( vec2 co )
 	vec3 c = mix(a, b, 0.5);
 	return c;
 }
-*/
-vec4 effect(vec4 color, Image texture, vex2 texture_coords, vec2 screen_coords) {
-	return color
-}
 
-/*
-void main() {
-    vec2 uv = 2. * gl_FragCoord.xy / iResolution.xy - 1.;
+vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+	vec2 uv = 2. * gl_FragCoord.xy / iResolution.xy - 1.;
 	vec2 uvs = uv * iResolution.xy / max(iResolution.x, iResolution.y);
 	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
 	p += .2 * vec3(sin(iGlobalTime / 16.), sin(iGlobalTime / 12.),  sin(iGlobalTime / 128.));
 	
 	float freqs[4];
 	//Sound
-	freqs[0] = texture2D( iChannel0, vec2( 0.01, 0.25 ) ).x;
-	freqs[1] = texture2D( iChannel0, vec2( 0.07, 0.25 ) ).x;
-	freqs[2] = texture2D( iChannel0, vec2( 0.15, 0.25 ) ).x;
-	freqs[3] = texture2D( iChannel0, vec2( 0.30, 0.25 ) ).x;
+	freqs[0] = 0.5;
+	freqs[1] = 0.5;
+	freqs[2] = 0.5;
+	freqs[3] = 0.5;
 
 	float t = field(p,freqs[2]);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
@@ -95,5 +83,5 @@ void main() {
 	vec3 rnd2 = nrand3( seed2 );
 	starcolor += vec4(pow(rnd2.y,40.0));
 	
-	gl_FragColor = mix(freqs[3]-.3, 1., v) * vec4(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t, 1.0)+c2+starcolor;
-}*/
+	return mix(freqs[3]-.3, 1., v) * vec4(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t, 1.0)+c2+starcolor;
+}

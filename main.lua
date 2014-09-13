@@ -1,10 +1,18 @@
-_WIDTH = love.graphics.getWidth()
-_HEIGHT = love.graphics.getHeight()
-_SHADER = "galaxy.fs"
+_WIDTH	= love.graphics.getWidth()
+_HEIGHT	= love.graphics.getHeight()
+_TIME	= 0
+_SHADER	= "galaxy.fs"
 
 function love.load()
 	shader = love.graphics.newShader(_SHADER)
 	print(shader:getWarnings())
+
+	shader:send("iResolution", { _WIDTH, _HEIGHT })
+end
+
+function love.update(dt)
+	_TIME = _TIME + dt
+	shader:send("iGlobalTime", _TIME)
 end
 
 function love.draw()
