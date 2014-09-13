@@ -3,7 +3,13 @@ local Galaxy = {}
 function Galaxy:init(shader, quality)
    self.time = 0
    local source = love.filesystem.read(shader)
-   if quality == "high" then
+   if quality == "insane" then
+      source = source:gsub("$FRONT_LAYER_QUALITY", "300")
+      source = source:gsub("$BACK_LAYER_QUALITY", "150")
+      
+      source = source:gsub("$FRONT_LAYER_INTENSITY", "10000.0")
+      source = source:gsub("$BACK_LAYER_INTENSITY", "20000.0")
+   elseif quality == "high" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "80")
       source = source:gsub("$BACK_LAYER_QUALITY", "40")
       
