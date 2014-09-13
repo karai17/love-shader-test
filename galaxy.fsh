@@ -1,4 +1,3 @@
-extern vec2      iResolution;           // viewport resolution (in pixels)
 extern float     iGlobalTime;           // shader playback time (in seconds)
 extern vec2      offset;
 
@@ -12,7 +11,7 @@ float field(in vec3 p,float s) {
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
-	for (int i = 0; i < 26; ++i) {
+	for (int i = 0; i < 32; ++i) {
 		float mag = dot(p, p);
 		p = abs(p) / mag + vec3(-.5, -.4, -1.5);
 		float w = exp(-float(i) / 7.);
@@ -29,7 +28,7 @@ float field2(in vec3 p, float s) {
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
-	for (int i = 0; i < 18; ++i) {
+	for (int i = 0; i < 32; ++i) {
 		float mag = dot(p, p);
 		p = abs(p) / mag + vec3(-.5, -.4, -1.5);
 		float w = exp(-float(i) / 7.);
@@ -49,8 +48,8 @@ vec3 nrand3( vec2 co )
 }
 
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
-	vec2 uv = 2. * gl_FragCoord.xy / iResolution.xy - 1.;
-	vec2 uvs = uv * iResolution.xy / max(iResolution.x, iResolution.y);
+	vec2 uv = 2. * gl_FragCoord.xy / love_ScreenSize.xy - 1.;
+	vec2 uvs = uv * love_ScreenSize.xy / max(love_ScreenSize.x, love_ScreenSize.y);
 	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
 	//p += .2 * vec3(sin(iGlobalTime / 16.), sin(iGlobalTime / 12.),  sin(iGlobalTime / 128.));
 	p += vec3(offset, 0.0);
@@ -76,13 +75,13 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	//Let's add some stars
 	//Thanks to http://glsl.heroku.com/e#6904.0
 	vec2 seed = p.xy * 2.0;	
-	seed = floor(seed * iResolution.x);
+	seed = floor(seed * love_ScreenSize.x);
 	vec3 rnd = nrand3( seed );
 	vec4 starcolor = vec4(pow(rnd.y,40.0));
 	
 	//Second Layer
 	vec2 seed2 = p2.xy * 2.0;
-	seed2 = floor(seed2 * iResolution.x);
+	seed2 = floor(seed2 * love_ScreenSize.x);
 	vec3 rnd2 = nrand3( seed2 );
 	starcolor += vec4(pow(rnd2.y,40.0));
 	
