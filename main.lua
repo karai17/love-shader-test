@@ -16,6 +16,8 @@ function love.update(dt)
 end
 
 function love.draw()
+        x, y = love.mouse.getPosition()
+	shader:send("offset", {x/1000.0, y/1000.0})
 	love.graphics.setShader(shader)
 	love.graphics.rectangle("fill", 0, 0, _WIDTH, _HEIGHT)
 	love.graphics.setShader()
