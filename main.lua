@@ -9,6 +9,7 @@ _SHADER = [[
 
 function love.load()
 	shader = love.graphics.newShader(_SHADER)
+	print(shader:getWarnings())
 end
 
 function love.update(dt)
@@ -17,7 +18,10 @@ end
 
 function love.draw()
 	love.graphics.setColor(255, 255, 0, 255)
+
+	love.graphics.setShader(shader)
 	love.graphics.rectangle("fill", 0, 0, _WIDTH, _HEIGHT)
+	love.graphics.setShader()
 end
 
 function love.keypressed(key, isrepeat)
