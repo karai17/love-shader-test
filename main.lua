@@ -12,8 +12,10 @@ _SHADER = [[
 function love.load()
 	shader = love.graphics.newShader(_SHADER)
 	print(shader:getWarnings())
-
 	shader:send("kim", love.graphics.newImage("kim.png"))
+
+	osama = love.graphics.newImage("osama.png")
+	quad = love.graphics.newQuad(0, 0, 50, 50, osama:getDimensions())
 end
 
 function love.update(dt)
@@ -22,7 +24,7 @@ end
 
 function love.draw()
 	love.graphics.setShader(shader)
-	love.graphics.rectangle("fill", 0, 0, _WIDTH, _HEIGHT)
+	love.graphics.draw(osama, quad, 0, 0)
 	love.graphics.setShader()
 end
 
