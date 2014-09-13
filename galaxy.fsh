@@ -1,5 +1,6 @@
 extern float     iGlobalTime;           // shader playback time (in seconds)
 extern vec2      offset;
+extern vec4      freqs;
 
 //CBS
 //Parallax scrolling fractal galaxy.
@@ -54,12 +55,12 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	//p += .2 * vec3(sin(iGlobalTime / 16.), sin(iGlobalTime / 12.),  sin(iGlobalTime / 128.));
 	p += vec3(offset, 0.0);
 	
-	float freqs[4];
-	//Sound
-	freqs[0] = 0.5;
-	freqs[1] = 0.5;
-	freqs[2] = 0.5;
-	freqs[3] = 0.5;
+	// float freqs[4];
+	// //Sound
+	// freqs[0] = 0.5;
+	// freqs[1] = 0.5;
+	// freqs[2] = 0.5;
+	// freqs[3] = 0.5;
 
 	float t = field(p,freqs[2]);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
