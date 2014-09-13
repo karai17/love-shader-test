@@ -6,8 +6,11 @@ _SHADER = [[
 
 	vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
 		vec4 left	= Texel(kim, texture_coords - vec2( 0.05,  0.0));
+                left = left*left.a;
 		vec4 right	= Texel(kim, texture_coords + vec2( 0.05,  0.0));
+                right = right*right.a;
 		vec4 pixel	= Texel(kim, texture_coords);
+                pixel = pixel*pixel.a;
 
 		return vec4(left.r, pixel.g, right.b, (left.a + 3*pixel.a + right.a)/5);
 	}
