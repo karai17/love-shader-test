@@ -2,6 +2,9 @@ extern float     iGlobalTime;           // shader playback time (in seconds)
 extern vec2      offset;
 extern vec4      freqs;
 
+#define FRONT_LAYER_QUALITY $FRONT_LAYER_QUALITY
+#define BACK_LAYER_QUALITY $BACK_LAYER_QUALITY
+
 //CBS
 //Parallax scrolling fractal galaxy.
 //Inspired by JoshP's Simplicity shader: https://www.shadertoy.com/view/lslGWr
@@ -12,7 +15,7 @@ float field(in vec3 p,float s) {
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
-	for (int i = 0; i < 32; ++i) {
+	for (int i = 0; i < FRONT_LAYER_QUALITY; ++i) {
 		float mag = dot(p, p);
 		p = abs(p) / mag + vec3(-.5, -.4, -1.5);
 		float w = exp(-float(i) / 7.);
@@ -29,7 +32,7 @@ float field2(in vec3 p, float s) {
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
-	for (int i = 0; i < 32; ++i) {
+	for (int i = 0; i < BACK_LAYER_QUALITY; ++i) {
 		float mag = dot(p, p);
 		p = abs(p) / mag + vec3(-.5, -.4, -1.5);
 		float w = exp(-float(i) / 7.);
@@ -51,24 +54,15 @@ vec3 nrand3( vec2 co )
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
 	vec2 uv = 2. * gl_FragCoord.xy / love_ScreenSize.xy - 1.;
 	vec2 uvs = uv * love_ScreenSize.xy / max(love_ScreenSize.x, love_ScreenSize.y);
-	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
-	//p += .2 * vec3(sin(iGlobalTime / 16.), sin(iGlobalTime / 12.),  sin(iGlobalTime / 128.));
-	p += vec3(offset, 0.0);
+	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.) + vec3(offset, 0.0);
 	
-	// float freqs[4];
-	// //Sound
-	// freqs[0] = 0.5;
-	// freqs[1] = 0.5;
-	// freqs[2] = 0.5;
-	// freqs[3] = 0.5;
-
 	float t = field(p,freqs[2]);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
 	
-    //Second Layer
+	//Second Layer
 	vec3 p2 = vec3(uvs / (4.+sin(iGlobalTime*0.11)*0.2+0.2+sin(iGlobalTime*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
 	p2 += 0.2*p;
-	//p2 += 0.25 * vec3(sin(iGlobalTime / 16.), sin(iGlobalTime / 12.),  sin(iGlobalTime / 128.));
+
 	float t2 = field2(p2,freqs[3]);
 	vec4 c2 = mix(.4, 1., v) * vec4(1.3 * t2 * t2 * t2 ,1.8  * t2 * t2 , t2* freqs[0], t2);
 	

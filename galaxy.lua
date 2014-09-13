@@ -2,7 +2,11 @@ local Galaxy = {}
 
 function Galaxy:init(shader)
    self.time = 0
-   self.fs = love.graphics.newShader(shader)
+   local source = love.filesystem.read(shader)
+   source = source:gsub("$FRONT_LAYER_QUALITY", "20")
+   source = source:gsub("$BACK_LAYER_QUALITY", "10")
+   print(source)
+   self.fs = love.graphics.newShader(source)
    self.frequencies = {0.5, 0.5, 0.5, 0.5}
    print(self.fs:getWarnings())
 end
