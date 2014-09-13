@@ -1,10 +1,19 @@
 local Galaxy = {}
 
-function Galaxy:init(shader)
+function Galaxy:init(shader, quality)
    self.time = 0
    local source = love.filesystem.read(shader)
-   source = source:gsub("$FRONT_LAYER_QUALITY", "20")
-   source = source:gsub("$BACK_LAYER_QUALITY", "10")
+   if quality == "high" then
+      source = source:gsub("$FRONT_LAYER_QUALITY", "80")
+      source = source:gsub("$BACK_LAYER_QUALITY", "40")
+   elseif quality == "medium" then
+      source = source:gsub("$FRONT_LAYER_QUALITY", "26")
+      source = source:gsub("$BACK_LAYER_QUALITY", "18")
+   elseif quality == "low" then
+      source = source:gsub("$FRONT_LAYER_QUALITY", "20")
+      source = source:gsub("$BACK_LAYER_QUALITY", "10")
+   end
+	 
    print(source)
    self.fs = love.graphics.newShader(source)
    self.frequencies = {0.5, 0.5, 0.5, 0.5}
