@@ -5,28 +5,11 @@ _SHADER = [[
 	extern Image kim;
 
 	vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
-		vec4 red_up			= Texel(kim, texture_coords + vec2( 0.01,  0.00));
-		vec4 red_down		= Texel(kim, texture_coords + vec2(-0.01,  0.00));
-		vec4 red_left		= Texel(kim, texture_coords + vec2( 0.00,  0.01));
-		vec4 red_right		= Texel(kim, texture_coords + vec2( 0.00, -0.01));
-		vec4 red_middle		= Texel(kim, texture_coords);
-		vec4 red = ((red_up + red_down + red_left + red_right + red_middle) / 5.0) + vec4(1.0, 0.0, 0.0, 1.0);
+		vec4 left	= Texel(kim, texture_coords - vec2( 0.05,  0.0));
+		vec4 right	= Texel(kim, texture_coords + vec2( 0.05,  0.0));
+		vec4 pixel	= Texel(kim, texture_coords);
 
-		vec4 green_up		= Texel(kim, texture_coords + vec2( 0.02,  0.00));
-		vec4 green_down		= Texel(kim, texture_coords + vec2(-0.02,  0.00));
-		vec4 green_left		= Texel(kim, texture_coords + vec2( 0.00,  0.02));
-		vec4 green_right	= Texel(kim, texture_coords + vec2( 0.00, -0.02));
-		vec4 green_middle	= Texel(kim, texture_coords);
-		vec4 green = ((green_up + green_down + green_left + green_right + green_middle) / 5.0) + vec4(0.0, 1.0, 0.0, 1.0);
-
-		vec4 blue_up		= Texel(kim, texture_coords + vec2( 0.03,  0.00));
-		vec4 blue_down		= Texel(kim, texture_coords + vec2(-0.03,  0.00));
-		vec4 blue_left		= Texel(kim, texture_coords + vec2( 0.00,  0.03));
-		vec4 blue_right		= Texel(kim, texture_coords + vec2( 0.00, -0.03));
-		vec4 blue_middle	= Texel(kim, texture_coords);
-		vec4 blue = ((blue_up + blue_down + blue_left + blue_right + blue_middle) / 5.0) + vec4(0.0, 0.0, 1.0, 1.0);
-
-		return vec4(red.r, green.g, blue.b, 1.0);
+		return vec4(left.r, pixel.g, right.b, (left.a + 3*pixel.a + right.a)/5);
 	}
 ]]
 
