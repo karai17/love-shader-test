@@ -58,10 +58,10 @@ float field2(in vec3 p, float s) {
 	return max(0., 5. * accum / tw - .7);
 }
 
-vec3 nrand3( vec2 co )
+vec3 nrand3(vec2 co)
 {
-	vec3 a = fract( cos( co.x*8.3e-3 + co.y )*vec3(1.3e5, 4.7e5, 2.9e5) );
-	vec3 b = fract( sin( co.x*0.3e-3 + co.y )*vec3(8.1e5, 1.0e5, 0.1e5) );
+	vec3 a = fract(cos(co.x*8.3e-3 + co.y )*vec3(1.3e5, 4.7e5, 2.9e5));
+	vec3 b = fract(sin(co.x*0.3e-3 + co.y )*vec3(8.1e5, 1.0e5, 0.1e5));
 	vec3 c = mix(a, b, 0.5);
 	return c;
 }
@@ -93,13 +93,13 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	//Let's add some stars
 	vec2 seed = p.xy * 2.0;	
 	seed = floor(seed * love_ScreenSize.x);
-	vec3 rnd = nrand3( seed );
+	vec3 rnd = nrand3(seed);
 	vec4 starcolor = vec4(pow(rnd.y,40.0));
 	
 	//Second Layer
 	vec2 seed2 = p2.xy * 2.0;
 	seed2 = floor(seed2 * love_ScreenSize.x);
-	vec3 rnd2 = nrand3( seed2 );
+	vec3 rnd2 = nrand3(seed2);
 	starcolor += vec4(pow(rnd2.y,40.0));
 	
 	return mix(freqs[3]-.3, 1., v) * vec4(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t, 1.0)+c2+starcolor;
