@@ -36,7 +36,6 @@ function Galaxy:init(shader, quality)
 
       source = source:gsub("$DEFINE_EVOLVE", "")
    end
-   print(source)
    self.fs = love.graphics.newShader(source)
    self.frequencies = {0.5, 0.5, 0.5, 0.5}
    print(self.fs:getWarnings())
@@ -62,8 +61,8 @@ function Galaxy:draw(w, h)
    local x, y = love.mouse.getPosition()
    self.fs:send("offset", {x/1000.0 - 0.5, y/1000.0 - 0.5})
    self.fs:send("freqs", self.frequencies)
-   self.fs:send("global_time", self.time)
-   self.fs:send("global_time_sin", math.sin(self.time))
+   self.fs:send("global_time", self.time*20)
+   self.fs:send("global_time_sin", math.sin(self.time*20))
 
    
    love.graphics.setShader(self.fs)
