@@ -2,10 +2,10 @@ _WIDTH = love.graphics.getWidth()
 _HEIGHT = love.graphics.getHeight()
 
 _SHADER = [[
-	extern vec4 color;
+	extern vec4 green;
 
 	vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
-		return color;
+		return green;
 		//return vec4(clamp(sin(screen_coords.x/100), 0, 1), clamp(cos(screen_coords.y/100), 0, 1), 0.0, 1.0);
 		//return vec4(1.0, 0.0, 0.0, 1.0);
 	}
@@ -13,8 +13,8 @@ _SHADER = [[
 
 function love.load()
 	shader = love.graphics.newShader(_SHADER)
-	shader:send("color", { 0.0, 1.0, 0.0, 1.0 })
-	
+	shader:send("green", { 0.0, 1.0, 0.0, 1.0 })
+
 	print(shader:getWarnings())
 
 end
