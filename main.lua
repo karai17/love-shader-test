@@ -4,7 +4,7 @@ _HEIGHT	= love.graphics.getHeight()
 galaxy = require "galaxy"
 
 function love.load()
-	galaxy:init("galaxy.fsh", "low")
+	galaxy:init("galaxy.fsh", "high")
 end
 
 function love.update(dt)

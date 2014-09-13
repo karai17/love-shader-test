@@ -1,4 +1,5 @@
-extern float     iGlobalTime;           // shader playback time (in seconds)
+extern float     global_time;           // shader playback time (in seconds)
+extern float     global_time_sin;       // sine of playback time
 extern vec2      offset;
 extern vec4      freqs;
 
@@ -11,7 +12,7 @@ extern vec4      freqs;
 
 // http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
 float field(in vec3 p,float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(sin(iGlobalTime) * 4373.11));
+	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * 4373.11));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
@@ -28,7 +29,7 @@ float field(in vec3 p,float s) {
 
 // Less iterations for second layer
 float field2(in vec3 p, float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(sin(iGlobalTime) * 4373.11));
+	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * 4373.11));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
@@ -60,7 +61,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
 	
 	//Second Layer
-	vec3 p2 = vec3(uvs / (4.+sin(iGlobalTime*0.11)*0.2+0.2+sin(iGlobalTime*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
+	vec3 p2 = vec3(uvs / (4.+sin(global_time*0.11)*0.2+0.2+sin(global_time*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
 	p2 += 0.2*p;
 
 	float t2 = field2(p2,freqs[3]);
