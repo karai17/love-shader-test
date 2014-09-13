@@ -3,11 +3,10 @@ _HEIGHT = love.graphics.getHeight()
 
 _SHADER = [[
 	extern vec4 green;
+	extern vec4 mouse;
 
 	vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
-		return green;
-		//return vec4(clamp(sin(screen_coords.x/100), 0, 1), clamp(cos(screen_coords.y/100), 0, 1), 0.0, 1.0);
-		//return vec4(1.0, 0.0, 0.0, 1.0);
+		return vec4(mouse.r, green.g, mouse.b, mouse.a);
 	}
 ]]
 
@@ -20,6 +19,10 @@ function love.load()
 end
 
 function love.update(dt)
+	local x, y = love.mouse.getPosition()
+	x = x / _WIDTH
+	y = y / _HEIGHT
+	shader:send("mouse", { x, 0.0, y, 1.0 })
 
 end
 
