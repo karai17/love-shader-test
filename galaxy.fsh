@@ -60,8 +60,8 @@ float field2(in vec3 p, float s) {
 
 vec3 nrand3(vec2 co)
 {
-	vec3 a = fract(cos(co.x*8.3e-3 + co.y )*vec3(1.3e5, 4.7e5, 2.9e5));
-	vec3 b = fract(sin(co.x*0.3e-3 + co.y )*vec3(8.1e5, 1.0e5, 0.1e5));
+	vec3 a = fract(cos(co.x*8.3e-3 + co.y)*vec3(1.3e5, 4.7e5, 2.9e5));
+	vec3 b = fract(sin(co.x*0.3e-3 + co.y)*vec3(8.1e5, 1.0e5, 0.1e5));
 	vec3 c = mix(a, b, 0.5);
 	return c;
 }
@@ -75,7 +75,6 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 #else
 	p += vec3(offset, 0);
 #endif
-	
 	float t = field(p,freqs[2]);
 	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
 	
