@@ -5,7 +5,13 @@ _SHADER = [[
 	extern Image kim;
 
 	vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
-		return Texel(kim, texture_coords);
+		vec4 up = Texel(kim, texture_coords + vec2(0.01, 0.0));
+		vec4 down = Texel(kim, texture_coords + vec2(-0.01, 0.0));
+		vec4 left = Texel(kim, texture_coords + vec2(0.0, 0.01));
+		vec4 right = Texel(kim, texture_coords + vec2(0.0, -0.01));
+		vec4 middle = Texel(kim, texture_coords);
+
+		return (up + down + left + right + middle) / 4.0;
 	}
 ]]
 
@@ -24,7 +30,7 @@ end
 
 function love.draw()
 	love.graphics.setShader(shader)
-	love.graphics.draw(osama, quad, 0, 0)
+	love.graphics.draw(osama, quad, _WIDTH / 2 - 25, _HEIGHT / 2 - 25)
 	love.graphics.setShader()
 end
 
