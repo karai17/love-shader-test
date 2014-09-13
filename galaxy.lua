@@ -13,9 +13,9 @@ function Galaxy:update(dt)
       self.frequencies[i] = self.frequencies[i] - 0.6*dt;
 
    end
-   if math.random(0, 100)*dt < 0.1 then
+   if math.random(0, 100)*dt < 0.2 then
       local which = math.random(1, 4)
-      self.frequencies[which] = self.frequencies[which] + 0.2
+      self.frequencies[which] = self.frequencies[which] + 0.1
    end
    for i in ipairs(self.frequencies) do
       self.frequencies[i] = math.clamp(0.1, self.frequencies[i], 1.0)
