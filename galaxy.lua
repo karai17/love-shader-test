@@ -6,12 +6,21 @@ function Galaxy:init(shader, quality)
    if quality == "high" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "80")
       source = source:gsub("$BACK_LAYER_QUALITY", "40")
+      
+      source = source:gsub("$FRONT_LAYER_INTENSITY", "5000.0")
+      source = source:gsub("$BACK_LAYER_INTENSITY", "8000.0")
    elseif quality == "medium" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "26")
       source = source:gsub("$BACK_LAYER_QUALITY", "18")
+
+      source = source:gsub("$FRONT_LAYER_INTENSITY", "10000.0")
+      source = source:gsub("$BACK_LAYER_INTENSITY", "15000.0")
    elseif quality == "low" then
       source = source:gsub("$FRONT_LAYER_QUALITY", "20")
       source = source:gsub("$BACK_LAYER_QUALITY", "10")
+
+      source = source:gsub("$FRONT_LAYER_INTENSITY", "20000.0")
+      source = source:gsub("$BACK_LAYER_INTENSITY", "30000.0")
    end
 	 
    self.fs = love.graphics.newShader(source)

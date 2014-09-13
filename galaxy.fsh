@@ -5,6 +5,9 @@ extern vec4      freqs;
 
 #define FRONT_LAYER_QUALITY $FRONT_LAYER_QUALITY
 #define BACK_LAYER_QUALITY $BACK_LAYER_QUALITY
+#define FRONT_LAYER_INTENSITY $FRONT_LAYER_INTENSITY
+#define BACK_LAYER_INTENSITY $BACK_LAYER_INTENSITY
+
 
 //CBS
 //Parallax scrolling fractal galaxy.
@@ -12,7 +15,7 @@ extern vec4      freqs;
 
 // http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
 float field(in vec3 p,float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * 4373.11));
+	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * FRONT_LAYER_INTENSITY));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
@@ -29,7 +32,7 @@ float field(in vec3 p,float s) {
 
 // Less iterations for second layer
 float field2(in vec3 p, float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * 4373.11));
+	float strength = 7. + .03 * log(1.e-6 + fract(global_time_sin * BACK_LAYER_INTENSITY));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
