@@ -76,7 +76,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 	p += vec3(offset, 0);
 #endif
 	float t = field(p,freqs[2]);
-	float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
+	float v = 1;
 	
 	//Second Layer
 	vec3 p2 = vec3(uvs / (4.+sin(global_time*0.11)*0.2+0.2+sin(global_time*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);

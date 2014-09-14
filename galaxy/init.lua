@@ -5,12 +5,6 @@ function Galaxy:init(shader, quality)
    local source = love.filesystem.read(shader)
 
    self.quality = {}
-   self.quality.insane  = source:gsub("$FRONT_LAYER_QUALITY", "300")
-   self.quality.insane  = self.quality.insane:gsub("$BACK_LAYER_QUALITY", "150")
-   self.quality.insane  = self.quality.insane:gsub("$FRONT_LAYER_INTENSITY", "10000.0")
-   self.quality.insane  = self.quality.insane:gsub("$BACK_LAYER_INTENSITY", "20000.0")
-   self.quality.insane  = self.quality.insane:gsub("$DEFINE_EVOLVE", "#define EVOLVE")
-
    self.quality.high    = source:gsub("$FRONT_LAYER_QUALITY", "80")
    self.quality.high    = self.quality.high:gsub("$BACK_LAYER_QUALITY", "40")
    self.quality.high    = self.quality.high:gsub("$FRONT_LAYER_INTENSITY", "5000.0")
@@ -38,22 +32,24 @@ function Galaxy:update(dt)
    -- make channels fade out
    for i in ipairs(self.frequencies) do
       self.frequencies[i] = self.frequencies[i] - 0.3*dt;
-
    end
+
    if math.random(0, 100)*dt < 0.2 then
       local which = math.random(1, 4)
       self.frequencies[which] = self.frequencies[which] + 0.1
    end
+
    for i in ipairs(self.frequencies) do
       self.frequencies[i] = math.clamp(0.1, self.frequencies[i], 10.0)
    end
+
    self.time = self.time + dt
 end
 
 function Galaxy:draw(w, h)
    -- half-assed attempt at motion. some sort of randomized pathing would be cool!
    local x, y = math.sin(self.time / 16), math.cos(self.time / 12)
-   self.fs:send("offset", { x, y })
+   self.fs:send("offset", { x-10, y-1 })
    self.fs:send("freqs", self.frequencies)
    self.fs:send("global_time", self.time)
    self.fs:send("global_time_sin", math.sin(self.time))
